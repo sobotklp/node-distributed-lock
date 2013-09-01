@@ -1,7 +1,28 @@
-/**
- * Created with IntelliJ IDEA.
- * User: lsobotkiewicz
- * Date: 2013-09-01
- * Time: 1:56 PM
- * To change this template use File | Settings | File Templates.
- */
+var distributedLock = require('../lib');
+
+function getTests(providerConfig) {
+	var provider;
+
+	beforeEach(function (done) {
+		provider = distributedLock.getProvider(providerConfig);
+
+		done();
+	});
+
+	afterEach(function (done) {
+		provider.close(function (error, response) {
+			done();
+		});
+	});
+
+	describe("is a LockProviderBase subclass that ", function () {
+
+		it("has a name attribute", function () {
+			expect(provider.name).not.toBeUndefined();
+		})
+
+	});
+}
+
+
+exports.getTests = getTests;

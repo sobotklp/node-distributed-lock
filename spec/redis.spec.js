@@ -1,6 +1,11 @@
-describe("The redis backend", function () {
+describe("The redis lock provider", function () {
 	var distributedLock = require('../lib');
 	var redis = require('redis');
+
+	var providerConfig = {
+		provider: 'redis'
+	};
+
 	var provider;
 	var redisClient;
 
@@ -16,12 +21,15 @@ describe("The redis backend", function () {
 	});
 
 	afterEach(function (done) {
-		redisClient.quit(function (error, response) {
+		provider.close(function (error, response) {
 			done();
 		});
 	});
 
-	it("supports locking by name", function (done) {
+	// Run full test suite with this provider.
+	require('./provider-agnostic').getTests(providerConfig);
+
+	it("uses the correct sequence of Redis commands when locking for the first time and releasing", function (done) {
 		// Get lock with a 10-second TTL
 		var lock = provider.getLock('test1', 10000);
 
@@ -47,7 +55,7 @@ describe("The redis backend", function () {
 		});
 	});
 
-	it("locks properly", function (done) {
+	it("issues the correct sequence of Redis commands when waiting for a lock to expire", function (done) {
 		// Get lock with a 400-ms TTL
 		var lock = provider.getLock('test2', 400);
 
