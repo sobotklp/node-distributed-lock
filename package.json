@@ -1,24 +1,18 @@
 {
     "name": "node-distributed-lock",
 	"description": "A library for working with distributed locks in Node.js. Supports multiple lock providers to minimize the need for additional infrastructure",
+	"version": "0.1.0",
+	"homepage": "https://github.com/sobotklp/node-distributed-lock",
+	"license": "MIT",
 	"author": "Lewis Sobotkiewicz <lewis.sobot@gmail.com>",
-    "engines": {
-        "node": ">=0.4.5"
-    },
     "repository": {
-        "type": "git"
-      , "url": "https://github.com/sobotklp/node-distributed-lock.git"
+        "type": "git",
+        "url": "https://github.com/sobotklp/node-distributed-lock.git"
     },
-    "dependencies": {
-    },
-	"scripts": {
-		"test": "jasmine-node --verbose --forceexit --captureExceptions test/"
-	},
     "devDependencies": {
 		"jasmine-node": "1.11.0"
     },
 	"scripts": {
 		"test": "jasmine-node --verbose --captureExceptions spec/"
 	}
-
 }
