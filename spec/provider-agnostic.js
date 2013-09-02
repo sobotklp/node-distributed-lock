@@ -18,16 +18,16 @@ function getTests(providerConfig) {
 	describe("is a LockProviderBase subclass that ", function () {
 
 		it("has a name attribute", function () {
-			expect(provider.name).not.toBeUndefined();
+			expect(provider.name).not.toBeFalsy();
 		});
 
 		it("prevents multiple workers from accessing the same critical section", function (done) {
 			var count = 0;
 			var total = 0;
-			var iterations = 50;
+			var concurrency = 50;
 			var lock = provider.getLock('critsection', 10000);
 
-			for(var i=0; i<iterations; i++) {
+			for(var i=0; i<concurrency; i++) {
 				setTimeout(function () {
 					lock.acquire(function (error) {
 						expect(error).toBeNull();
@@ -43,7 +43,7 @@ function getTests(providerConfig) {
 
 							lock.release();
 
-							if (total == iterations) done();
+							if (total == concurrency) done();
 
 						}, 2);
 
