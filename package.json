@@ -1,18 +1,34 @@
 {
-    "name": "distributed-lock",
-    "description": "A library for working with distributed locks in Node.js. Supports multiple lock providers to minimize the need for additional infrastructure",
-    "version": "0.1.0",
-    "homepage": "https://github.com/sobotklp/node-distributed-lock",
-    "license": "MIT",
-    "author": "Lewis Sobotkiewicz <lewis.sobot@gmail.com>",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sobotklp/node-distributed-lock.git"
-    },
-    "devDependencies": {
-        "jasmine-node": "1.11.0"
-    },
-    "scripts": {
-        "test": "jasmine-node --verbose --captureExceptions spec/"
-    }
+  "name": "distributed-lock",
+  "description": "A library for working with distributed locks in Node.js. Supports multiple lock providers to minimize the need for additional infrastructure",
+  "version": "0.2.0",
+  "homepage": "https://github.com/sobotklp/node-distributed-lock",
+  "license": "MIT",
+  "author": "Lewis Sobotkiewicz <lewis.sobot@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sobotklp/node-distributed-lock.git"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/chai-subset": "^1.3.3",
+    "@types/mocha": "^10.0.1",
+    "eslint": "^8.45.0"
+  },
+  "scripts": {
+    "test:unit": "mocha"
+  },
+  "bugs": {
+    "url": "https://github.com/sobotklp/node-distributed-lock./issues"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100,
+    "arrowParens": "avoid"
+  }
 }
