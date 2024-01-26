@@ -1,8 +1,11 @@
 # node-distributed-lock
 
-A library for enforcing mutual exclusion of critical sections across multiple processes and machines
+A library for enforcing mutual exclusion of critical sections across multiple processes and servers.
 
-[![Build Status](https://travis-ci.org/sobotklp/node-distributed-lock.png?branch=master)](https://travis-ci.org/sobotklp/node-distributed-lock)
+Features and functionality:
+
+- Supports multiple backends for creating locks, including Redis and etcd3
+- Monotonically increasing ids, can be used for fencing/checking causality violations
 
 ## Installation
 
@@ -10,8 +13,8 @@ A library for enforcing mutual exclusion of critical sections across multiple pr
 
 ## Usage with Redis
 
-	var redis = require('redis');
-	var redisClient = redis.createClient();
+    var redis = require('redis');
+    var redisClient = redis.createClient();
 
     var distributedLock = require('distributed-lock')
 
@@ -36,4 +39,6 @@ A library for enforcing mutual exclusion of critical sections across multiple pr
     	lock.release();
     });
 
+## Resources
 
+- (https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html)[Martin Kleppmann's blog post on distributed locking]

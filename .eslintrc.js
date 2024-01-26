@@ -15,12 +15,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    'header/header': [
-      'error',
-      'block',
-      '---------------------------------------------------------\n * Copyright (C) Microsoft Corporation. All rights reserved.\n *--------------------------------------------------------',
-      ],
-      '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
+    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
 
     // todo: clean these:
     '@typescript-eslint/no-explicit-any': 'off',

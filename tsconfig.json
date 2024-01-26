@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    //"esModuleInterop": false,
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "module": "ES2020",
+    "target": "ES2020",
+    "outDir": "build",
+    "lib": ["ES2020"],
+    "types": ["chai-as-promised", "chai-subset", "mocha", "node"],
+    "baseUrl": ".",
+  },
+  "include": ["src"],
+}
