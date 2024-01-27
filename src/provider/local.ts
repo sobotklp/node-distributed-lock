@@ -1,4 +1,4 @@
-import { ILockProvider } from './provider';
+import { ILockProvider } from './base';
 
 type ExpireAt = number;
 type LeaseID = number;

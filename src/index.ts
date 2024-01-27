@@ -1,5 +1,5 @@
-import { LocalProvider } from './local';
 import { Lock } from './lock';
+import { LocalProvider } from './provider/local';
 
 const provider = new LocalProvider();
 

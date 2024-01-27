@@ -1,4 +1,4 @@
-import { ILockProvider } from './provider';
+import { ILockProvider } from './provider/base';
 
 export interface ILock {
   /**
