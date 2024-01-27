@@ -13,8 +13,9 @@ export interface ILockProvider {
    * Release the lock given by key. If the lock is not currently acquired, an error is thrown
    *
    * @param key The name of the lock to release.
+   * @param leaseId The leaseId used when acquiring the lock.
    */
-  release(key: string): Promise<void>;
+  release(key: string, leaseId: number): Promise<void>;
 
   /**
    * Erase all values in the lock store. Only used for testing

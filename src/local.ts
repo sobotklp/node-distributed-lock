@@ -40,9 +40,13 @@ export class LocalProvider implements ILockProvider {
     return Promise.resolve(leaseId);
   }
 
-  public release(key: string): Promise<void> {
+  public release(key: string, leaseId: number): Promise<void> {
     const lockData = this.valueMap.get(key);
+
     if (lockData !== undefined) {
+      if (lockData[1] !== leaseId) {
+        return Promise.reject(new ReferenceError('Wrong leaseId given'));
+      }
       lockData[2] = false;
       this.valueMap.set(key, lockData);
     }

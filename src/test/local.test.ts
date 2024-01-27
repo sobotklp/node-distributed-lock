@@ -25,11 +25,24 @@ describe('LocalProvider', () => {
     const lease1 = await provider.acquire('resource', 1000);
     expect(lease1).to.equal(1);
 
-    const result = await provider.release('resource');
+    const result = await provider.release('resource', lease1);
     expect(result).to.equal(undefined);
 
     // Now, can acquire the lock again
     const lease2 = await provider.acquire('resource', 1000);
     expect(lease2).to.equal(1);
+  });
+
+  it('release fails if the incorrect leaseId is given', async () => {
+    const lease1 = await provider.acquire('resource', 1000);
+    expect(lease1).to.equal(1);
+
+    try {
+      await provider.release('resource', 666);
+      throw 'Should not succeed';
+    } catch (error) {
+      expect(error).to.be.an.instanceof(ReferenceError);
+      expect(error.message).to.equal('Wrong leaseId given');
+    }
   });
 });
