@@ -1,7 +1,6 @@
-import { ILockProvider } from './base';
+import { ILockProvider, LeaseID } from './base';
 
 type ExpireAt = number;
-type LeaseID = number;
 type LockData = [ExpireAt, LeaseID, boolean];
 
 function monotime_msec(): number {

@@ -32,7 +32,7 @@
     "fmt": "prettier --write \"src/**/*.{ts,js}\" && npm run -s test:lint -- --fix"
   },
   "bugs": {
-    "url": "https://github.com/sobotklp/node-distributed-lock./issues"
+    "url": "https://github.com/sobotklp/node-distributed-lock/issues"
   },
   "engines": {
     "node": ">=16"
