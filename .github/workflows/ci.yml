@@ -1,0 +1,45 @@
+name: Run Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [^16, ^18, ^20]
+        experimental: [false]
+
+    continue-on-error: ${{ matrix.experimental }}
+
+    # Use Redis service on localhost to run tests
+    services:
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps port 6379 on service container to the host
+          - 6379:6379
+
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout Repo
+
+    - uses: actions/setup-node@v4
+      name: Set up Node ${{ matrix.node-version }}
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install Deps
+      run: npm ci
+
+    - name: Build
+      run: npm run build:ts
+
+    - name: Test
+      run: npm test
