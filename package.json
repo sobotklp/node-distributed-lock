@@ -28,7 +28,6 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "prepare": "husky install",
     "build:ts": "tsc",
     "test:unit": "mocha",
     "test:lint": "eslint \"src/**/*.ts\"",
