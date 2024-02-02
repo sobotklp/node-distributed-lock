@@ -19,6 +19,8 @@
     "chai": "^5.0.3",
     "eslint": "^8.45.0",
     "eslint-plugin-header": "^3.1.1",
+    "husky": "^9.0.10",
+    "lint-staged": "^15.2.1",
     "mocha": "^10.2.0",
     "prettier": "^3.2.4",
     "redis": "^4.6.12",
@@ -26,16 +28,26 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
+    "prepare": "husky install",
     "build:ts": "tsc",
     "test:unit": "mocha",
     "test:lint": "eslint \"src/**/*.ts\"",
-    "fmt": "prettier --write \"src/**/*.{ts,js}\" && npm run -s test:lint -- --fix"
+    "fmt": "prettier --write \"src/**/*.{ts,js}\" && npm run -s test:lint -- --fix",
+    "prepare": "husky install"
   },
   "bugs": {
     "url": "https://github.com/sobotklp/node-distributed-lock/issues"
   },
   "engines": {
     "node": ">=16"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --max-warnings 0 ."
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   },
   "prettier": {
     "singleQuote": true,
