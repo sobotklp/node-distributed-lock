@@ -2,7 +2,7 @@
 
 _A library for enforcing mutual exclusion of critical sections across multiple processes_
 
-|Build| |License|
+[![Build](https://github.com/sobotklp/node-distributed-lock/actions/workflows/ci.yml/badge.svg)](https://github.com/sobotklp/node-distributed-lock/actions/workflows/ci.yml)
 
 Features and functionality:
 
@@ -40,15 +40,6 @@ Features and functionality:
 
     	lock.release();
     });
-
-:Code: https://github.com/sobotklp/node-distributed-lock
-
-.. |License| image:: https://img.shields.io/badge/license-MIT-yellow.svg
-:alt:
-
-.. |Build| image:: https://github.com/sobotklp/node-distributed-lock/actions/workflows/ci.yml/badge.svg?branch=master
-:target: https://github.com/sobotklp/node-distributed-lock/actions/workflows/ci.yml
-:alt: CI Status
 
 ## Resources
 
