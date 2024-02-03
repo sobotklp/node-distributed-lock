@@ -2,6 +2,13 @@ import { ILockProvider } from './provider/base';
 
 export interface ILock {
   /**
+   * leaseId is a monotonically increasing numeric value
+   *
+   * All future processes that acquire the lock are guaranteed to have a higher leaseId number.
+   */
+  leaseId: string;
+
+  /**
    * Acquire a lock from this provider. A provider must provide the following guarantees to the client:
    * - Atomicity: No two processes can acquire the same lock via a race condition
    * - Monotonicity: Repeated accesses of the same lock MUST return a monotonically increasing id. This depends on the provider's backend using durable storage.
@@ -20,11 +27,13 @@ export interface ILock {
 }
 
 export class Lock implements ILock {
+  public leaseId: string;
+
   constructor(
     private provider: ILockProvider,
     private key: string,
     private ttl: number,
-    private id?: number,
+    private id: number | undefined,
   ) {
     if (!ttl || ttl < 1000) {
       throw new RangeError('The TTL for a lock must be at least 1 second');
@@ -33,7 +42,7 @@ export class Lock implements ILock {
 
   public acquire(): Promise<this> {
     return this.provider.acquire(this.key, this.ttl, this.id).then(leaseId => {
-      this.id = leaseId;
+      this.leaseId = leaseId.toString();
       return this;
     });
   }

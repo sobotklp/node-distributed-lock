@@ -9,6 +9,17 @@ Features and functionality:
 - Supports multiple backends for creating locks, including Redis and etcd3
 - Monotonically increasing ids, can be used for fencing/checking causality violations
 
+## A word on reliability of distributed locking
+
+Though it's common to think of a distributed lock as a reliable device for ensuring mutual exclusion within a distributed system, there are edge cases that can cause a lock to be acquired by two (or more) processes. For example,
+
+- In Redis, due to asynchronous replication it's possible for a lock to be lost if a server crashes before the lock data is replicated to a secondary.
+- Heartbeat-based sessions such as etcd3 leases rely on both the client and the server agreeing that a client holds the lease. Heartbeat-based sessions can be interrupted by stop-the-world garbage collection pauses, long-running synchronous operations, and other issues.
+
+Therefore, it's misleading to assume that a distributed lock is as reliable as an OS mutex object.
+If the correctness of your use case depends highly on mutual exclusion, it's recommended to use a
+monotonically increasing fencing token (aka revision number) to protect from writing stale data.
+
 ## Installation
 
     $ npm install distributed-lock
