@@ -1,7 +1,7 @@
 version: '3.9'
 
 x-variables:
-  flag_initial_cluster_token: &flag_initial_cluster_token '--initial-cluster-token=mys3cr3ttok3n'
+  flag_initial_cluster_token: &flag_initial_cluster_token '--initial-cluster-token=sup3rs3kritt0ken'
   common_settings: &common_settings
     image: quay.io/coreos/etcd:v3.5.12
     restart: unless-stopped
@@ -27,7 +27,7 @@ services:
       - '--name=etcd-1'
       - '--listen-peer-urls=http://0.0.0.0:2380'
       - '--listen-client-urls=http://0.0.0.0:2379'
-      - '--advertise-client-urls=http://etcd-1:2379'
+      - '--advertise-client-urls=http://localhost:2379'
       - '--heartbeat-interval=250'
       - '--election-timeout=1250'
       - '--initial-cluster-state=new'
