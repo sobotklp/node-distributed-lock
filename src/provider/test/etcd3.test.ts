@@ -9,7 +9,7 @@ describe('Etcd3Provider', () => {
 
   beforeEach(async () => {
     client = new Etcd3({
-      hosts: ['etc-1:2379', 'etcd-2:2379', 'etcd-3:2379'],
+      hosts: ['localhost:2379'],
     });
 
     provider = new Etcd3Provider(client);

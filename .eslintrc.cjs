@@ -1,9 +1,5 @@
-/*---------------------------------------------------------
- * Copyright (C) Microsoft Corporation. All rights reserved.
- *--------------------------------------------------------*/
-
 module.exports = {
-  ignorePatterns: ['**/*.d.ts', '**/test/*.*', '**/*.js'],
+  ignorePatterns: ['**/*.d.ts', '**/*.js'],
   parser: '@typescript-eslint/parser',
   extends: ['plugin:@typescript-eslint/recommended'],
   plugins: ['header'],
@@ -17,8 +13,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
 
-    // todo: clean these:
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 };

@@ -13,69 +13,28 @@ services:
     volumes:
       - ../..:/workspaces:cached
 
-    # Runs app on the same network as the redis container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:redis
-
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    ports:
-      - '6379:6379'
+    network_mode: service:devcontainer
 
   etcd-1:
     <<: *common_settings
     command:
       - '--name=etcd-1'
-      - '--initial-advertise-peer-urls=http://etcd-1:2380'
       - '--listen-peer-urls=http://0.0.0.0:2380'
       - '--listen-client-urls=http://0.0.0.0:2379'
       - '--advertise-client-urls=http://etcd-1:2379'
       - '--heartbeat-interval=250'
       - '--election-timeout=1250'
-      - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
       - '--initial-cluster-state=new'
       - *flag_initial_cluster_token
     volumes:
       - etcd1:/etcd_data
-    ports:
-      - '2379:2379'
-
-  etcd-2:
-    <<: *common_settings
-    command:
-      - '--name=etcd-2'
-      - '--initial-advertise-peer-urls=http://etcd-2:2380'
-      - '--listen-peer-urls=http://0.0.0.0:2380'
-      - '--listen-client-urls=http://0.0.0.0:2379'
-      - '--advertise-client-urls=http://etcd-2:2379'
-      - '--heartbeat-interval=250'
-      - '--election-timeout=1250'
-      - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
-      - '--initial-cluster-state=new'
-      - *flag_initial_cluster_token
-    volumes:
-      - etcd2:/etcd_data
-
-  etcd-3:
-    <<: *common_settings
-    command:
-      - '--name=etcd-3'
-      - '--initial-advertise-peer-urls=http://etcd-3:2380'
-      - '--listen-peer-urls=http://0.0.0.0:2380'
-      - '--listen-client-urls=http://0.0.0.0:2379'
-      - '--advertise-client-urls=http://etcd-3:2379'
-      - '--heartbeat-interval=250'
-      - '--election-timeout=1250'
-      - '--initial-cluster=etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380'
-      - '--initial-cluster-state=new'
-      - *flag_initial_cluster_token
-    volumes:
-      - etcd3:/etcd_data
+    network_mode: service:devcontainer
 
 volumes:
   etcd1:
-  etcd2:
-  etcd3:
