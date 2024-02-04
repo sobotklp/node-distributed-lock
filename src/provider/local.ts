@@ -1,3 +1,4 @@
+import { LockingFailed } from '../errors.js';
 import { ILockProvider, LeaseID } from './base';
 
 type ExpireAt = number;
@@ -26,10 +27,13 @@ export class LocalProvider implements ILockProvider {
     // Have we seen this lock before?
     if (lockData !== undefined) {
       // if so, is it currently acquired?
+
+      // @ts-expect-error noUnusedParameters
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [expireAt, leaseId, isAquired] = lockData;
 
       if (isAquired && monotime_msec() < expireAt) {
-        return Promise.reject(`Already acquired with lease id ${leaseId}!`);
+        return Promise.reject(new LockingFailed(`Lock is already acquired`));
       }
     }
 

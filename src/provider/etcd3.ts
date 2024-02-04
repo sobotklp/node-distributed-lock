@@ -1,4 +1,5 @@
 import { Lease } from 'etcd3';
+import { LockingFailed } from '../errors.js';
 import { ILockProvider, LeaseID } from './base';
 
 export class Etcd3Provider implements ILockProvider {
@@ -42,11 +43,13 @@ export class Etcd3Provider implements ILockProvider {
           .revoke()
           .catch(() => undefined)
           .then(() => {
-            return Promise.reject(`Already acquired!`);
+            return Promise.reject(new LockingFailed(`Lock is already acquired`));
           });
       });
   }
 
+  // @ts-expect-error noUnusedParameters
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public release(key: string, leaseId: number): Promise<void> {
     const etcdKey = this.keyPrefix + key;
     const lease = this.leaseMap.get(etcdKey);
@@ -54,7 +57,6 @@ export class Etcd3Provider implements ILockProvider {
     if (lease === undefined) {
       return Promise.resolve();
     }
-    console.log(`Removing ${leaseId}`);
 
     return lease.revoke();
   }

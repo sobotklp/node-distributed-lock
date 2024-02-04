@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import * as crypto from 'crypto';
 import { Etcd3 } from 'etcd3';
+import { LockingFailed } from '../../errors.js';
 import { Etcd3Provider } from '../etcd3.js';
 
 describe('Etcd3Provider', () => {
@@ -30,8 +31,8 @@ describe('Etcd3Provider', () => {
       await provider.acquire(lockName, 1000);
       throw 'Should not succeed';
     } catch (error) {
-      expect(error).to.be.an('string');
-      expect(error).to.equal('Already acquired!');
+      expect(error).to.be.an.instanceof(LockingFailed);
+      expect(error.message).to.equal('Lock is already acquired');
     }
   });
 

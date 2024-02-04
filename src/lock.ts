@@ -6,7 +6,7 @@ export interface ILock {
    *
    * All future processes that acquire the lock are guaranteed to have a higher leaseId number.
    */
-  leaseId: string;
+  leaseId: number;
 
   /**
    * Acquire a lock from this provider. A provider must provide the following guarantees to the client:
@@ -14,7 +14,7 @@ export interface ILock {
    * - Monotonicity: Repeated accesses of the same lock MUST return a monotonically increasing id. This depends on the provider's backend using durable storage.
    *
    * A provider is not expected to guarantee to the client:
-   * - Linearizability:
+   * - Linearizability: Because locking is never perfectly reliable, the user must take extra steps to ensure the correct write order.
    */
   acquire(): Promise<this>;
 
@@ -27,12 +27,12 @@ export interface ILock {
 }
 
 export class Lock implements ILock {
-  public leaseId: string;
+  public leaseId: number;
 
   constructor(
     private provider: ILockProvider,
-    private key: string,
-    private ttl: number,
+    public key: string,
+    public ttl: number,
     private id: number | undefined,
   ) {
     if (!ttl || ttl < 1000) {
@@ -42,7 +42,7 @@ export class Lock implements ILock {
 
   public acquire(): Promise<this> {
     return this.provider.acquire(this.key, this.ttl, this.id).then(leaseId => {
-      this.leaseId = leaseId.toString();
+      this.leaseId = leaseId;
       return this;
     });
   }
@@ -59,6 +59,6 @@ export class Lock implements ILock {
   }
 
   public release(): Promise<void> {
-    return Promise.resolve();
+    return this.provider.release(this.key, this.leaseId);
   }
 }

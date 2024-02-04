@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { LockingFailed } from '../../errors.js';
 import { LocalProvider } from '../local.js';
 
 describe('LocalProvider', () => {
@@ -16,8 +17,8 @@ describe('LocalProvider', () => {
       await provider.acquire('resource', 1000);
       throw 'Should not succeed';
     } catch (error) {
-      expect(error).to.be.an('string');
-      expect(error).to.equal('Already acquired with lease id 1!');
+      expect(error).to.be.an.instanceOf(LockingFailed);
+      expect(error.message).to.equal('Lock is already acquired');
     }
   });
 

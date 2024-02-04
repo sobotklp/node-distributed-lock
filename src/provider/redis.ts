@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import { LockingFailed } from '../errors.js';
 import { ILockProvider, LeaseID } from './base';
 
 const ACQUIRE_SCRIPT = `
@@ -81,7 +82,7 @@ export class RedisProvider implements ILockProvider {
       .then((reply: string) => {
         // Lock was already acquired
         if (reply == '-1') {
-          return Promise.reject(`Already acquired!`);
+          return Promise.reject(new LockingFailed(`Lock is already acquired`));
         }
 
         return reply;
